@@ -8,3 +8,7 @@ A small app that extracts sound events from a .json file and writes them in .csv
 
 ### Compile line
 `pyinstaller --onefile --windowed --icon=app.ico --add-data "app.ico;." sound_event_extractor.py`
+
+
+
+**_Note: app was tested only on .json files of animations from Insurgency: Sandstorm, update 1.18._**
