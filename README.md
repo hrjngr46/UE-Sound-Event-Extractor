@@ -11,4 +11,4 @@ A small app that extracts sound events from a .json file and writes them in .csv
 
 
 
-**_Note: app was tested only on .json files of animations from Insurgency: Sandstorm, update 1.18._**
+**_Note: app was tested only on .json files of animations from Insurgency: Sandstorm, update 1.18. Unreal Engine 4._**
