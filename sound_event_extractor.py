@@ -47,14 +47,19 @@ def parse_json(json_data):
         sound_name = "Unknown"
         if sound_entry:
             props = sound_entry.get("Properties", {})
-            sound_name = (
+            raw_name = (
                 props.get("Event_FP", {}).get("ObjectName")
                 or props.get("Event_TP", {}).get("ObjectName")
                 or "Unknown"
             )
 
+            if isinstance(raw_name, str) and raw_name.startswith("AkAudioEvent'"):
+                sound_name = raw_name.replace("AkAudioEvent'", "").strip("'")
+            else:
+                sound_name = raw_name
+
         result.append({
-            "Time (sec)": round(time_sec, 6),
+            "Time (sec)": round(time_sec, 4),
             "Frame": frame,
             "Sound": sound_name
         })
@@ -63,7 +68,13 @@ def parse_json(json_data):
 
 def write_csv(data, output_path):
     with open(output_path, mode='w', encoding='utf-8-sig', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=["Time (sec)", "Frame", "Sound"], delimiter='\t')
+        writer = csv.DictWriter(
+            f,
+            fieldnames=["Time (sec)", "Frame", "Sound"],
+            delimiter='\t',
+            quotechar='"',
+            quoting=csv.QUOTE_MINIMAL
+        )
         writer.writeheader()
         writer.writerows(data)
 
